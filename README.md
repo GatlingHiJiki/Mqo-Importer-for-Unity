@@ -16,6 +16,6 @@ Convertボタンをクリックすることでprefab化されます.
 今は各種Metasequoiaシェーダに対応したシェーダを作成中です.
 
 
-###謝辞
+###感謝
 このソースは、UnityでMMDを動かす会の、MMD-for-Unityを参考に作らせていただきました.
 http://sourceforge.jp/projects/mmd-for-unity/
