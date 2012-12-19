@@ -2,7 +2,7 @@ Mqo-Importer-for-Unity
 ======================
 Metasequoia　モデルデータ・フォーマット（.mqo）の読み込みを目的としたインポーター.
 
-現在、によって運営され、開発が行われています。
+現在、ガトリングひじき個人によって運営され、開発が行われています。
 
 
 ##使用するには
@@ -44,4 +44,4 @@ Mqo-Importer-for-Unityは利用者ご自身の判断と責任において利用�
 このソースは、UnityでMMDを動かす会の、MMD-for-Unityを参考に作らせていただきました.<br\/>
 http://sourceforge.jp/projects/mmd-for-unity/<br\/>
 
-(C)桒野　真行
+(C)桒野真行
