@@ -23,7 +23,7 @@ public class MQOLoaderWindow : EditorWindow {
 		if (mqoFile != null) {
 			if (GUI.Button(new Rect(0, buttonHeight, width / 2, height), "Convert")) {
 				MQOLoaderScript mqoLoader = new MQOLoaderScript(mqoFile);	
-				mqoFile = null;		// 読み終わったので空にする 
+				mqoFile = null;		//read out 
 			}
 		} else {
 			EditorGUI.LabelField(new Rect(0, buttonHeight, width, height), "Missing", "Select MQO File");

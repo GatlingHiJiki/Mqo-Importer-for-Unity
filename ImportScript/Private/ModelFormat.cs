@@ -754,7 +754,7 @@ namespace Root
 						{
 							this.facet = ReadStringsingle(currentText,split_space);
 						}
-						else if(currentText.StartsWith("	vertex"))
+						else if(currentText.StartsWith("	vertex") && !currentText.StartsWith("	vertexattr") )
 						{
 							//Debug.Log("Reading vert");
 							vartex_count = ReadStringUInt32(currentText,split_space);
@@ -830,7 +830,7 @@ namespace Root
 			{
 				public int vartex_count;
 				public uint[] face_vert_index;
-				public int mat;
+				public int mat = -1;
 				public Vector2[] uv;
 				public Color32[] vcol;
 				
@@ -856,6 +856,10 @@ namespace Root
 								this.vartex_count = 3;
 								this.face_vert_index = new uint[this.vartex_count];
 								this.face_vert_index = ReadStringUInt32s(str.Substring(4),secondSplitIdentifier,this.vartex_count);
+								this.uv = new Vector2[this.vartex_count];
+								this.uv[0] = Vector2.zero;
+								this.uv[1] = Vector2.zero;
+								this.uv[2] = Vector2.zero;
 								//Debug.Log("readed 3 Index:" + this.face_vert_index[0]+ " " + this.face_vert_index[1]+ " " + this.face_vert_index[2]);
 							}
 							else if(str.StartsWith(" M"))
@@ -880,6 +884,8 @@ namespace Root
 					}
 					else if(currenttext.StartsWith("		4"))
 					{
+						///*
+						//*/
 						//Debug.Log("reading 4V face");
 						brokenstring = currenttext.Split(splitIdentifier,50);
 						foreach(string str in brokenstring)
@@ -890,6 +896,11 @@ namespace Root
 								this.vartex_count = 4;
 								this.face_vert_index = new uint[this.vartex_count];
 								this.face_vert_index = ReadStringUInt32s(str.Substring(4),secondSplitIdentifier,this.vartex_count);
+								this.uv = new Vector2[this.vartex_count];
+								this.uv[0] = Vector2.zero;
+								this.uv[1] = Vector2.zero;
+								this.uv[2] = Vector2.zero;
+								this.uv[3] = Vector2.zero;
 								//Debug.Log("readed 3 Index:" + this.face_vert_index[0]+ " " + this.face_vert_index[1]+ " " + this.face_vert_index[2]);
 							}
 							else if(str.StartsWith(" M"))

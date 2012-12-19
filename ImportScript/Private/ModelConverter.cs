@@ -14,12 +14,10 @@ namespace Root
 		public class MQOConverter
 		{
 			
-			//Create Mesh comp //四角形として判断できるものは,変換した方が頂点数が少なくて済む.
 			//Entry Vertices Position of object
 			Vector3[] EntryVertices(MQO.MQOFormat format,int obj_id)
 			{
 				int vcount = (int)format.object_list.obj[obj_id].face_list.face_vartex_count;
-				int fcount = (int)format.object_list.obj[obj_id].face_list.face_count;
 				
 				int face_add = 0;
 				Vector3[] vpos = new Vector3[vcount];
@@ -45,14 +43,11 @@ namespace Root
 					vpos[i] = Vector3.Reflect(vpos[i],Vector3.right);
 				return vpos;
 			}
-			//
 			
-			//Also comp
 			//Entry Vertives NormalsVector of Face (You must make Normals from face positions)
 			Vector3[] EntryNormals(MQO.MQOFormat format,int obj_id)
 			{
 				int vcount = (int)format.object_list.obj[obj_id].face_list.face_vartex_count;
-				int fcount = (int)format.object_list.obj[obj_id].face_list.face_count;
 				
 					//Entry Normal vector making
 				Vector3 Nvector_1;
@@ -98,10 +93,9 @@ namespace Root
 					normal[i] = Vector3.Reflect(normal[i],Vector3.right);
 				return normal;
 			}
-			//
 			
-			//Also comp
-			//Entry Face UV of Face
+			
+			//Entry UV of Face
 			Vector2[] EntryUV(MQO.MQOFormat format,int obj_id)
 			{	
 				int vcount = (int)format.object_list.obj[obj_id].face_list.face_vartex_count;
@@ -133,8 +127,7 @@ namespace Root
 				return uvs;
 			}
 			
-			//Alos comp
-			//Entry Vert/normal/uv/ object Mesh
+			//Entry Vert/normal/uv object Mesh
 			void EntryAttributesForMesh(MQO.MQOFormat format, Mesh[] mesh)
 			{
 				for(int obj_id = 0; obj_id < format.object_list.obj_count; obj_id++)
@@ -145,7 +138,6 @@ namespace Root
 				}
 			}
 			
-			//Also comp
 			//Entry Mesh's Material & Vertex index
 			void SetSubMesh(MQO.MQOFormat format, Mesh[] mesh)
 			{
@@ -170,7 +162,6 @@ namespace Root
 							if (i == format.object_list.obj[obj_id].face_list.face[f_add].mat) {
 								if(format.object_list.obj[obj_id].face_list.face[f_add].vartex_count == 3)
 								{
-									//mesh[obj_id].vertices[];
 									submesh.Add((int)v_add);
 									submesh.Add((int)v_add+1);
 									submesh.Add((int)v_add+2);
@@ -186,7 +177,6 @@ namespace Root
 									submesh.Add((int)v_add);
 									v_add += 4;
 								}
-								//v_add = submesh.Count;
 							}
 						}
 						//for(int f = 0; f < submesh.Count; f+=3)
@@ -226,9 +216,8 @@ namespace Root
 				return mesh;
 			}
 			
-			//Maybe Comp : You must make shader switch
+			//You must make mqo shader switch
 			//Create Material Object
-			// 色の生成
 			void EntryColors(MQO.MQOFormat format, Material[] mats)
 			{
 				// マテリアルの生成 
@@ -242,18 +231,14 @@ namespace Root
 						case 0:
 							mats[i] = new Material(Shader.Find("Diffuse"));
 							break;
-						//case 1:
-						//	mats[i] = new Material(Shader.Find(""));
-						//	break;
+						case 1:
+							mats[i] = new Material(Shader.Find("Metasequoia/Constant"));
+							break;
 						default :
 							mats[i] = new Material(Shader.Find("Diffuse"));
 							break;
 					}
 					mats[i].color = mqoMat.col;
-					/*
-					if (cutoutFlag) {
-						mats[i].SetFloat("_Cutoff", 1-mqoMat.alpha);
-					}*/
 					
 					// テクスチャが空でなければ登録
 					if (mqoMat.tex != "") {
@@ -264,7 +249,6 @@ namespace Root
 				}
 			}
 			
-			//Maybe Comp :
 			//マテリアルに必要な色などを登録
 			Material[] EntryAttributesForMaterials(MQO.MQOFormat format)
 			{
@@ -274,7 +258,6 @@ namespace Root
 				return mats;
 			}
 			
-			//Maybe Comp :
 			//マテリアルの登録
 			void CreateAssetForMaterials(MQO.MQOFormat format, Material[] mats)
 			{
