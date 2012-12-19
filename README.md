@@ -5,8 +5,7 @@ Metasequoia　モデルデータ・フォーマット（.mqo）の読み込み�
 現在、によって運営され、開発が行われています。
 
 
-###使用するには
-===============
+##使用するには
 
 プロジェクト追加後、メニューバーにImporterタブが出現.<br\/>
 そのタブのMQO Loaderを選んでください.
@@ -18,7 +17,7 @@ Convertボタンをクリックすることでprefab化されます.<br\/>
 ![sample](https://raw.github.com/YuhaOh/Mqo-Importer-for-Unity/master/Window_sample.jpg)
 <br\/>
 
-###開発ログ
+##開発ログ
 12/19/2012:<br\/>
 Constantシェーダ追加.<br\/>
 バグ：
