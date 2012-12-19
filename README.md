@@ -18,9 +18,6 @@ Convertボタンをクリックすることでprefab化されます.<br\/>
 ![sample](https://raw.github.com/YuhaOh/Mqo-Importer-for-Unity/master/Window_sample.jpg)
 <br\/>
 
-＃＃＃使用参考：
-MMD-for-Unityとほぼ同じ形で使えるので、
-
 ###開発ログ
 12/19/2012:<br\/>
 Constantシェーダ追加.<br\/>
