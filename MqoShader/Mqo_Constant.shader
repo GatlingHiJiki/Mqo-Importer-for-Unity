@@ -2,8 +2,8 @@ Shader "Metasequoia/Constant" {
 	Properties {
 		_MainColor ("col", Color) = (1,1,1,1)
 		_MainTex ("Base (RGB)", 2D) = "white" {}
-		_AlphaTex ("Alpha Blended (RGBA) ", 2D) = "black" {}
-		_BumpTex ("Bump Blended ", 2D) = "white" {}
+		//_AlphaTex ("Alpha Blended (RGBA) ", 2D) = "black" {}
+		//_BumpTex ("Bump Blended ", 2D) = "bump" {}
 	}
 
 	SubShader {
@@ -17,7 +17,8 @@ Shader "Metasequoia/Constant" {
 				constantColor [_MainColor]
                 combine constant * texture 
 			} 
-			SetTexture [_AlphaTex] { combine texture lerp (texture) previous }
+			//SetTexture [_AlphaTex] { combine texture lerp (texture) previous }
+			//SetTexture [_BumpTex] { combine texture lerp (texture) previous }
 		}
 		
 	}
