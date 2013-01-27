@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +26,8 @@ public class MQOLoaderScript {
 		StreamReader stream = this.LoadFile(this.mqo, path);
 		
 		Root.MQO.MQOFormat format = Root.MQO.MQOLoader.Load(stream, Root_obj, path);
-		BurnUnityFormatForMQO(format);
+		if(format.haveMaterial == true)
+			BurnUnityFormatForMQO(format);
 		stream.Close();
 	}
 		
@@ -61,31 +62,36 @@ public class MQOLoaderScript {
 		Root_obj = new GameObject(format.name);
 		format.caller = Root_obj;
 		
-		Root.MQO.MQOConverter conv = new Root.MQO.MQOConverter();
-		
-		this.meshes = conv.CreateMeshes(format);
-		Debug.Log("Maked meshes");
-		
-		this.materials = conv.CreateMaterials(format);
-		Debug.Log("Maked materials");
-		
-		//Object prefab = UnityEditor.PrefabUtility.CreateEmptyPrefab(format.folder + "/" + format.name + ".prefab");
-		GameObject[] child = new GameObject[format.object_list.obj_count];
-		for(int obj_id = 0;obj_id < format.object_list.obj_count; obj_id++)
+		if(format.haveMaterial == true)
 		{
-			child[obj_id] = new GameObject(format.object_list.obj[obj_id].obj_name);
-			conv.ReplaceObject(format , obj_id ,child[obj_id] ,meshes[obj_id] ,materials);
-			child[obj_id].transform.parent = Root_obj.transform;
+			Root.MQO.MQOConverter conv = new Root.MQO.MQOConverter();
+			
+			this.meshes = conv.CreateMeshes(format);
+			Debug.Log("Maked meshes");
+			
+			this.materials = conv.CreateMaterials(format);
+			Debug.Log("Maked materials");
+			
+			//Object prefab = UnityEditor.PrefabUtility.CreateEmptyPrefab(format.folder + "/" + format.name + ".prefab");
+			GameObject[] child = new GameObject[format.object_list.obj_count];
+			for(int obj_id = 0;obj_id < format.object_list.obj_count; obj_id++)
+			{
+				child[obj_id] = new GameObject(format.object_list.obj[obj_id].obj_name);
+				conv.ReplaceObject(format , obj_id ,child[obj_id] ,meshes[obj_id] ,materials);
+				child[obj_id].transform.parent = Root_obj.transform;
+			}
+			Debug.Log("Comp Prefab");
+			
+			/*Object[] prefab = new Object[format.object_list.obj_count];
+			for(int t = 0 ; t < format.object_list.obj_count; t++) {
+				prefab[t] = EditorUtility.CreateEmptyPrefab(format.folder + "/" + format.object_list.obj[t].obj_name + ".prefab");
+				EditorUtility.ReplacePrefab(child[t], prefab[t], ReplacePrefabOptions.ConnectToPrefab);
+			}*/
+			Object Root_Prefab = EditorUtility.CreateEmptyPrefab(format.folder + "/" + format.name + ".prefab");
+			EditorUtility.ReplacePrefab(Root_obj, Root_Prefab, ReplacePrefabOptions.ConnectToPrefab);
 		}
-		Debug.Log("Comp Prefab");
-		
-		/*Object[] prefab = new Object[format.object_list.obj_count];
-		for(int t = 0 ; t < format.object_list.obj_count; t++) {
-			prefab[t] = EditorUtility.CreateEmptyPrefab(format.folder + "/" + format.object_list.obj[t].obj_name + ".prefab");
-			EditorUtility.ReplacePrefab(child[t], prefab[t], ReplacePrefabOptions.ConnectToPrefab);
-		}*/
-		Object Root_Prefab = EditorUtility.CreateEmptyPrefab(format.folder + "/" + format.name + ".prefab");
-		EditorUtility.ReplacePrefab(Root_obj, Root_Prefab, ReplacePrefabOptions.ConnectToPrefab);
+		else
+			Debug.Log("Error:There aren't Material");
 		EndOfScript(format);
 	}//*/
 }

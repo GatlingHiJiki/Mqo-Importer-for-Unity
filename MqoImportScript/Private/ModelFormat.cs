@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
@@ -296,6 +296,7 @@ namespace Root
 			
 			public Header head;
 			public Scene scene;
+			public bool haveMaterial = false;
 			public MaterialList material_list;
 			public ObjectList object_list;
 			
@@ -359,6 +360,7 @@ namespace Root
 						else if(currenttext.StartsWith("Material "))
 						{
 							this.material_list = new MaterialList(sreader,currenttext);
+							haveMaterial = true;
 						}
 						
 						else if(currenttext.StartsWith("Object "))
@@ -541,6 +543,7 @@ namespace Root
 				public uint shader;
 				public uint vcol; 		// 0:nothing 1:Use
 				public Color col; 		// RGBA (%.3f , %.3f , %.3f , %.3f) 0-1 float
+				
 				public float dif; 		// diffuse 	(%.3f) 0-1 float
 				public float amb; 		// ambient 	(%.3f) 0-1 float
 				public float emi; 		// emissive 	(%.3f) 0-1 float

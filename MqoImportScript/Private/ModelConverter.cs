@@ -1,4 +1,4 @@
-//*
+﻿//*
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -152,39 +152,40 @@ namespace Root
 					
 					//サブメッシュ対マテリアル数
 					//warning after this line change
-					mesh[obj_id].subMeshCount = (int)format.material_list.material_count;
-					
-					List<int> submesh = new List<int>();
-					int v_add = 0;
-					for (int i = 0; i < mesh[obj_id].subMeshCount; i++)
-					{
-						for (int f_add = 0; f_add < fcount; f_add++) {
-							if (i == format.object_list.obj[obj_id].face_list.face[f_add].mat) {
-								if(format.object_list.obj[obj_id].face_list.face[f_add].vartex_count == 3)
-								{
-									submesh.Add((int)v_add);
-									submesh.Add((int)v_add+1);
-									submesh.Add((int)v_add+2);
-									v_add += 3;
-								}
-								else if(format.object_list.obj[obj_id].face_list.face[f_add].vartex_count == 4)
-								{
-									submesh.Add((int)v_add);
-									submesh.Add((int)v_add+1);
-									submesh.Add((int)v_add+2);
-									submesh.Add((int)v_add+2);
-									submesh.Add((int)v_add+3);
-									submesh.Add((int)v_add);
-									v_add += 4;
+						mesh[obj_id].subMeshCount = (int)format.material_list.material_count;
+						
+						
+						List<int> submesh = new List<int>();
+						int v_add = 0;
+						for (int i = 0; i < mesh[obj_id].subMeshCount; i++)
+						{
+							for (int f_add = 0; f_add < fcount; f_add++) {
+								if (i == format.object_list.obj[obj_id].face_list.face[f_add].mat) {
+									if(format.object_list.obj[obj_id].face_list.face[f_add].vartex_count == 3)
+									{
+										submesh.Add((int)v_add);
+										submesh.Add((int)v_add+1);
+										submesh.Add((int)v_add+2);
+										v_add += 3;
+									}
+									else if(format.object_list.obj[obj_id].face_list.face[f_add].vartex_count == 4)
+									{
+										submesh.Add((int)v_add);
+										submesh.Add((int)v_add+1);
+										submesh.Add((int)v_add+2);
+										submesh.Add((int)v_add+2);
+										submesh.Add((int)v_add+3);
+										submesh.Add((int)v_add);
+										v_add += 4;
+									}
 								}
 							}
-						}
-						//for(int f = 0; f < submesh.Count; f+=3)
-							//Debug.Log(obj_id + "'submesh_" + f + ":" + submesh[f] + "," + submesh[f+1] + "," + submesh[f+2]);
-						int[] buf = new int[submesh.Count];
-						submesh.CopyTo(buf);
-						mesh[obj_id].SetTriangles(buf, i);
-						submesh.Clear();
+							//for(int f = 0; f < submesh.Count; f+=3)
+								//Debug.Log(obj_id + "'submesh_" + f + ":" + submesh[f] + "," + submesh[f+1] + "," + submesh[f+2]);
+							int[] buf = new int[submesh.Count];
+							submesh.CopyTo(buf);
+							mesh[obj_id].SetTriangles(buf, i);
+							submesh.Clear();
 					}
 				}
 			}
@@ -225,7 +226,6 @@ namespace Root
 				{
 					// mqoフォーマットのマテリアルを取得 
 					MQO.MQOFormat.Material mqoMat = format.material_list.material[i];
-					
 					switch(mqoMat.shader)
 					{
 						case 0:
@@ -233,6 +233,9 @@ namespace Root
 							break;
 						case 1:
 							mats[i] = new Material(Shader.Find("Metasequoia/Constant"));
+							break;
+						case 3:
+							mats[i] = new Material(Shader.Find("Metasequoia/Phong"));
 							break;
 						default :
 							mats[i] = new Material(Shader.Find("Diffuse"));
@@ -287,6 +290,12 @@ namespace Root
 				filter.mesh = mesh;
 				MeshRenderer mren = obj.AddComponent<MeshRenderer>();
 				mren.sharedMaterials = materials;
+				for( int Set = 0; Set < mren.sharedMaterials.Length; Set++)
+				{
+					MQO.MQOFormat.Material mqoMat = format.material_list.material[Set];
+					if(mren.sharedMaterials[Set].shader = Shader.Find("Metasequoia/Phong"))
+						mren.sharedMaterials[Set].SetFloat("_Spec", mqoMat.spc);
+				}
 			}
 		}
 	}
