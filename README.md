@@ -43,4 +43,4 @@ Mqo-Importer-for-Unityは利用者ご自身の判断と責任において利用�
 このソースは、UnityでMMDを動かす会の、MMD-for-Unityを参考に作らせていただきました.<br\/>
 http://sourceforge.jp/projects/mmd-for-unity/<br\/>
 
-(C)桒野真行
+(C)ガトリングひじき
